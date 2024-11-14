@@ -1,14 +1,15 @@
+// routes/postRoutes.js
 const express = require('express');
-const postController = require('../controllers/postController');
 const router = express.Router();
+const postController = require('../controllers/postController'); // Importér post controller
 
-// Opret en ny post
-router.post('/:id', postController.createPost);
+// GET /posts/new - Vis formular for at oprette en post
+router.get('/posts/new', postController.getNewPostForm);
 
-// Like en post
-router.post('/:post_id/like', postController.likePost);
+// POST /posts - Opretter en ny post
+router.post('/posts', postController.createPost);
 
-// Slet en post
-router.delete('/:post_id', postController.deletePost);
+// GET /posts - Hent alle posts
+router.get('/posts', postController.getAllPosts);
 
 module.exports = router;

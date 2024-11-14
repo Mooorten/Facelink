@@ -1,19 +1,36 @@
-<%- include('layout') %>
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Facelink</title>
+</head>
+<body>
+<h1>Velkommen til Facelink</h1>
 
-<h2>Alle Brugere</h2>
+<h2>Opret en ny bruger</h2>
+<form action="/users" method="POST">
+    <input type="text" name="name" placeholder="Navn" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <button type="submit">Opret bruger</button>
+</form>
+
+<h2>Opret et nyt post</h2>
+<form action="/posts" method="POST">
+    <textarea name="text" placeholder="Skriv noget..." required></textarea>
+    <select name="user_id" required>
+        <% users.forEach(user => { %>
+            <option value="<%= user._id %>"><%= user.name %></option>
+        <% }) %>
+    </select>
+    <button type="submit">Opret post</button>
+</form>
+
+<h2>Brugere</h2>
 <ul>
-    <% users.forEach(function(user) { %>
-        <li>
-            <a href="/users/<%= user._id %>"><%= user.name %></a> - <%= user.email %>
-            <ul>
-                <% user.posts.forEach(function(post) { %>
-                    <li>
-                        <strong><%= post.text %></strong>
-                        <p><%= post.timestamp.toLocaleString() %></p>
-                        <p>Likes: <%= post.likes %></p>
-                    </li>
-                <% }) %>
-            </ul>
-        </li>
+    <% users.forEach(user => { %>
+        <li><%= user.name %> - <%= user.email %></li>
     <% }) %>
 </ul>
+</body>
+</html>

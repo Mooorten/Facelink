@@ -1,60 +1,52 @@
-const Post = require('../models/postModel');
-const User = require('../models/userModel');
+// controllers/postController.js
+const Post = require('../models/postModel'); // Post model
+const User = require('../models/userModel'); // User model
+
+// Vis formularen for at oprette en ny post
+exports.getNewPostForm = async (req, res) => {
+    try {
+        const users = await User.find(); // Hent alle brugere fra databasen
+        res.render('newPost', { users }); // Render formularen for at oprette et post
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Fejl ved visning af formular for post');
+    }
+};
 
 // Opret en ny post
 exports.createPost = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { text, timestamp } = req.body;
+        const { user_id, text } = req.body; // Hent data fra formularen
 
-        const post = new Post({
-            user_id: id,
+        // Opret en ny post
+        const newPost = new Post({
+            user_id,
             text,
-            timestamp
+            timestamp: new Date(),
+            likes: 0
         });
 
-        await post.save();
+        await newPost.save(); // Gem posten i databasen
 
-        const user = await User.findById(id);
-        if (user) {
-            user.posts.push(post._id);
-            await user.save();
-        }
+        // Tilføj posten til brugerens posts
+        await User.findByIdAndUpdate(user_id, {
+            $push: { posts: newPost._id }
+        });
 
-        res.status(201).json(post);
+        res.redirect('/'); // Redirect til forsiden
     } catch (err) {
-        res.status(400).json({ error: err.message });
+        console.error(err);
+        res.status(500).send('Kunne ikke oprette posten');
     }
 };
 
-// Like en post
-exports.likePost = async (req, res) => {
+// Hent alle posts
+exports.getAllPosts = async (req, res) => {
     try {
-        const { post_id } = req.params;
-
-        const post = await Post.findById(post_id);
-        if (!post) return res.status(404).json({ error: 'Post not found' });
-
-        post.likes += 1;
-        await post.save();
-
-        res.status(200).json(post);
+        const posts = await Post.find().populate('user_id'); // Find alle posts og populér user_id (for at vise brugerens info)
+        res.render('posts', { posts }); // Render posts view med alle posts
     } catch (err) {
-        res.status(400).json({ error: err.message });
-    }
-};
-
-// Slet en post
-exports.deletePost = async (req, res) => {
-    try {
-        const { post_id } = req.params;
-
-        const post = await Post.findById(post_id);
-        if (!post) return res.status(404).json({ error: 'Post not found' });
-
-        await post.remove();
-        res.status(200).json({ message: 'Post deleted successfully' });
-    } catch (err) {
-        res.status(400).json({ error: err.message });
+        console.error(err);
+        res.status(500).send('Fejl ved hentning af posts');
     }
 };
