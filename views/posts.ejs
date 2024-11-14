@@ -1,0 +1,23 @@
+<!-- views/posts.ejs -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Facelink - Posts</title>
+</head>
+<body>
+<h1>Alle Posts</h1>
+
+<ul>
+    <% posts.forEach(post => { %>
+        <li>
+            <strong><%= post.user_id.name %> skrev:</strong>
+            <p><%= post.text %></p>
+            <p><em>Likes: <%= post.likes %></em></p>
+        </li>
+    <% }) %>
+</ul>
+
+<a href="/">Tilbage til forsiden</a>
+</body>
+</html>

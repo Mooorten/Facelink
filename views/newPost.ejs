@@ -1,0 +1,24 @@
+<!-- views/newPost.ejs -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret Post</title>
+</head>
+<body>
+<h1>Opret Post</h1>
+<form action="/posts" method="POST">
+    <label for="user_id">Vælg bruger</label>
+    <select name="user_id" required>
+        <% users.forEach(user => { %>
+            <option value="<%= user._id %>"><%= user.name %></option>
+        <% }) %>
+    </select>
+    <br>
+    <label for="text">Tekst:</label>
+    <textarea name="text" required></textarea>
+    <br>
+    <button type="submit">Opret post</button>
+</form>
+</body>
+</html>
