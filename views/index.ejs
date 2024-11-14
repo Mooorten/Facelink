@@ -1,0 +1,19 @@
+<%- include('layout') %>
+
+<h2>Alle Brugere</h2>
+<ul>
+    <% users.forEach(function(user) { %>
+        <li>
+            <a href="/users/<%= user._id %>"><%= user.name %></a> - <%= user.email %>
+            <ul>
+                <% user.posts.forEach(function(post) { %>
+                    <li>
+                        <strong><%= post.text %></strong>
+                        <p><%= post.timestamp.toLocaleString() %></p>
+                        <p>Likes: <%= post.likes %></p>
+                    </li>
+                <% }) %>
+            </ul>
+        </li>
+    <% }) %>
+</ul>
