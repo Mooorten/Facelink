@@ -1,19 +1,46 @@
-<!-- views/posts.ejs -->
 <!DOCTYPE html>
 <html lang="da">
 <head>
     <meta charset="UTF-8">
     <title>Facelink - Posts</title>
+    <script>
+        function searchPosts() {
+            const input = document.getElementById('searchInput').value.toLowerCase(); // Get search text
+            const posts = document.querySelectorAll('#postsList li'); // Get all post list items
+
+            posts.forEach(post => {
+                const userName = post.querySelector('.user-name').textContent.trim().toLowerCase(); // Get user name for each post
+                if (userName.includes(input)) {
+                    post.style.display = ''; // Show the post if the user's name includes the input text
+                } else {
+                    post.style.display = 'none'; // Hide the post if it doesn't match
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 <h1>Alle Posts</h1>
 
-<ul>
+<!-- Søgefelt for at finde posts fra en specifik bruger -->
+<input type="text" id="searchInput" oninput="searchPosts()" placeholder="Søg efter bruger...">
+
+<ul id="postsList">
     <% posts.forEach(post => { %>
         <li>
-            <strong><%= post.user_id.name %> skrev:</strong>
+            <strong class="user-name"><%= post.user_id.name %></strong> skrev:
             <p><%= post.text %></p>
             <p><em>Likes: <%= post.likes %></em></p>
+
+            <!-- Slet post-knap -->
+            <form action="/posts/<%= post._id %>/delete" method="POST" style="display:inline;">
+                <button type="submit">Slet</button>
+            </form>
+
+            <form action="/posts/<%= post._id %>/like" method="POST" style="display:inline;">
+                <button type="submit">Like</button>
+            </form>
+            <hr>
         </li>
     <% }) %>
 </ul>

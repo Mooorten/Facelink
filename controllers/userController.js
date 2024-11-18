@@ -1,4 +1,3 @@
-// controllers/userController.js
 const User = require('../models/userModel'); // User model
 
 // Hent alle brugere
