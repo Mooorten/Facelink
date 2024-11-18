@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Opret Post</title>
+    <title>Create Post</title>
 </head>
 <body>
-<h1>Opret Post</h1>
+<h1>Create Post</h1>
 <form action="/posts" method="POST">
-    <label for="user_id">Vælg bruger</label>
+    <label for="user_id">Select user</label>
     <select name="user_id" required>
         <% users.forEach(user => { %>
             <option value="<%= user._id %>"><%= user.name %></option>
         <% }) %>
     </select>
     <br>
-    <label for="text">Tekst:</label>
+    <label for="text">Text:</label>
     <textarea name="text" required></textarea>
     <br>
-    <button type="submit">Opret post</button>
+    <button type="submit">Create post</button>
 </form>
 </body>
 </html>

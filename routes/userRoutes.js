@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController'); // Importér user controller
+const userController = require('../controllers/userController');
 
-// Hent alle brugere (viser dem på forsiden)
+//Get all users
 router.get('/', userController.getAllUsers);
 
-// Opret en ny bruger
+//Create a new user
 router.post('/users', userController.createUser);
 
 module.exports = router;

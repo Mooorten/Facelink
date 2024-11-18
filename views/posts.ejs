@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Facelink - Posts</title>
@@ -20,21 +20,21 @@
     </script>
 </head>
 <body>
-<h1>Alle Posts</h1>
+<h1>All Posts</h1>
 
-<!-- Søgefelt for at finde posts fra en specifik bruger -->
-<input type="text" id="searchInput" oninput="searchPosts()" placeholder="Søg efter bruger...">
+<!-- Search field to find posts from a specific user -->
+<input type="text" id="searchInput" oninput="searchPosts()" placeholder="Search for user...">
 
 <ul id="postsList">
     <% posts.forEach(post => { %>
         <li>
-            <strong class="user-name"><%= post.user_id.name %></strong> skrev:
+            <strong class="user-name"><%= post.user_id.name %></strong> wrote:
             <p><%= post.text %></p>
             <p><em>Likes: <%= post.likes %></em></p>
 
-            <!-- Slet post-knap -->
+            <!-- Delete post button -->
             <form action="/posts/<%= post._id %>/delete" method="POST" style="display:inline;">
-                <button type="submit">Slet</button>
+                <button type="submit">Delete</button>
             </form>
 
             <form action="/posts/<%= post._id %>/like" method="POST" style="display:inline;">
@@ -45,6 +45,6 @@
     <% }) %>
 </ul>
 
-<a href="/">Tilbage til forsiden</a>
+<a href="/">Back to homepage</a>
 </body>
 </html>

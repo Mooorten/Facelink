@@ -1,37 +1,37 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Facelink</title>
 </head>
 <body>
-<h1>Velkommen til Facelink</h1>
+<h1>Welcome to Facelink</h1>
 
-<h2>Opret en ny bruger</h2>
+<h2>Create a new user</h2>
 <form action="/users" method="POST">
-    <input type="text" name="name" placeholder="Navn" required>
+    <input type="text" name="name" placeholder="Name" required>
     <input type="email" name="email" placeholder="Email" required>
-    <button type="submit">Opret bruger</button>
+    <button type="submit">Create user</button>
 </form>
 
-<h2>Opret et nyt post</h2>
+<h2>Create a new post</h2>
 <form action="/posts" method="POST">
-    <textarea name="text" placeholder="Skriv noget..." required></textarea>
+    <textarea name="text" placeholder="Write something..." required></textarea>
     <select name="user_id" required>
         <% users.forEach(user => { %>
             <option value="<%= user._id %>"><%= user.name %></option>
         <% }) %>
     </select>
-    <button type="submit">Opret post</button>
+    <button type="submit">Create post</button>
 </form>
 
-<h2>Brugere</h2>
+<h2>Users</h2>
 <ul>
     <% users.forEach(user => { %>
         <li><%= user.name %> - <%= user.email %></li>
     <% }) %>
 </ul>
 
-<a href="/posts">Gå til posts</a>
+<a href="/posts">Go to posts</a>
 </body>
 </html>

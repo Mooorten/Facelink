@@ -2,18 +2,16 @@ const express = require('express');
 const router = express.Router();
 const postController = require('../controllers/postController');
 
-// GET /posts/new - Vis formular for at oprette en post
+// GET /posts/new - Show form for create post
 router.get('/posts/new', postController.getNewPostForm);
 
-// POST /posts - Opretter en ny post
+// POST /posts - Create new post
 router.post('/posts', postController.createPost);
 
-// GET /posts - Hent alle posts (med søgefunktionalitet)
+// GET /posts - Get all posts
 router.get('/posts', postController.getAllPosts);
 
-// POST /posts/:id/like - Like et post
+// POST /posts/:id/like - Give a like
 router.post('/posts/:id/like', postController.likePost);
-
-//router.post('/posts/:id/delete', postController.deletePost);
 
 module.exports = router;
